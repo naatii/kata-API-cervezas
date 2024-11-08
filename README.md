@@ -36,7 +36,7 @@ docker-compose up -d
 ```
 
 ## Objetivos de la Kata
-- [ ] Hacer un *fork* del repositorio Git
+- [x] Hacer un *fork* del repositorio Git
 - [ ] Crear una nueva  rama (ex. : `usermame/language`)
 - [ ] Añadir un contenedor docker (para el lenguage elegido) al  docker-compose (NO ES NECESARIA ESTA PARTE)
 ### Objetivos del módulo  
