@@ -35,6 +35,7 @@ public class CategoryService {
         if (!categoryRepository.existsById(id)) {
             throw new NoSuchElementException("Categoria no encontrada con id: " + id);
         }
+        categoryRepository.deleteById(id);
     }
 
     public Category actualizarCategoria(Long id, Category categoryActualizada) {

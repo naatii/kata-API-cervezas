@@ -28,7 +28,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Category> obtenerCategoria(Long id) {
+    public ResponseEntity<Category> obtenerCategoria(@PathVariable Long id) {
         try {
             Category category = categoryService.obtenerCategoria(id)
                     .orElseThrow(() -> new NoSuchElementException("Categoria no encontrada con id " + id));
