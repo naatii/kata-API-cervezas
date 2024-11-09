@@ -28,9 +28,13 @@ public class BreweryController {
     }
     @GetMapping("/{id}")
     public ResponseEntity<Brewery> obtenerCerveceria(@PathVariable Long id){
-        return breweryService.obtenerCerveceria(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        try {
+            Brewery brewery = breweryService.obtenerCerveceria(id)
+                    .orElseThrow(()-> new NoSuchElementException("Cerveceria no encontrada con id " + id));
+            return ResponseEntity.ok(brewery);
+        } catch (NoSuchElementException ex){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
     @PostMapping
     public ResponseEntity<Brewery> agregarCerveceria(@RequestBody @Valid Brewery brewery) {
