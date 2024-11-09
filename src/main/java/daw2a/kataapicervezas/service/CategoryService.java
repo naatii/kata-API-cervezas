@@ -18,7 +18,7 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    public List<Category> listarCategorias(){
+    public List<Category> listarCategorias() {
 
         return categoryRepository.findAll();
     }
@@ -44,6 +44,4 @@ public class CategoryService {
             return categoryRepository.save(category);
         }).orElseThrow(() -> new NoSuchElementException("Categoría no encontrada con id " + id));
     }
-
-
 }
