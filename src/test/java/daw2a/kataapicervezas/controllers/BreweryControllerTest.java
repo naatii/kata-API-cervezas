@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDateTime;
@@ -85,6 +86,7 @@ public class BreweryControllerTest {
         ResponseEntity<Brewery> response = breweryController.agregarCerveceria(brewery);
 
         // Assert
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals(brewery, response.getBody());
         verify(breweryService, times(1)).agregarCerveceria(brewery);
     }
@@ -98,8 +100,10 @@ public class BreweryControllerTest {
         ResponseEntity<Brewery> response = breweryController.borrarCerveceria(1L);
 
         // Assert
+        assertEquals(Optional.empty(), breweryService.obtenerCerveceria(1L));
         assertEquals(204, response.getStatusCode().value());
         verify(breweryService, times(1)).borrarCerveceria(1L);
+        verify(breweryService, times(1)).obtenerCerveceria(1L);
     }
 
     @Test
