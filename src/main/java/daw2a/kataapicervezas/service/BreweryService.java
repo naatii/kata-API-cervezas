@@ -25,7 +25,7 @@ public class BreweryService {
     }
 
     // Listar cervecería por id
-    public Optional<Brewery> listarCerveceriaPorId(Long id) {
+    public Optional<Brewery> obtenerCerveceria(Long id) {
         return breweryRepository.findById(id);
     }
 
