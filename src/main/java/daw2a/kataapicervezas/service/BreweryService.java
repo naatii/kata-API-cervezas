@@ -14,6 +14,7 @@ public class BreweryService {
 
     @Autowired
     private final BreweryRepository breweryRepository;
+
     public BreweryService(BreweryRepository breweryRepository) {
         this.breweryRepository = breweryRepository;
     }
