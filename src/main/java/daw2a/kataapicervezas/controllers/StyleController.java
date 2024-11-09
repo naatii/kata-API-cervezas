@@ -20,8 +20,9 @@ public class StyleController {
     }
 
     @GetMapping
-    public List<Style> listarStyle() {
-        return styleService.listarStyle();
+    public ResponseEntity<List<Style>> listarStyles() {
+        List<Style> styles = styleService.listarStyle();
+        return ResponseEntity.ok(styles);
     }
 
     @GetMapping
@@ -43,9 +44,13 @@ public class StyleController {
     }
 
     @DeleteMapping("/{id}")
-    public String borrarStyle(@PathVariable Long id,
-                              @RequestBody @Valid Style stuleActualizado) {
-        return "Style";
+    public ResponseEntity<Style> borrarStyle(@PathVariable Long id) {
+        try {
+            styleService.borrarStyle(id);
+            return ResponseEntity.noContent().build();
+        } catch (NoSuchElementException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
 
     @PutMapping
