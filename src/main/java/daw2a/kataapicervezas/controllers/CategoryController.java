@@ -2,6 +2,7 @@ package daw2a.kataapicervezas.controllers;
 
 import daw2a.kataapicervezas.entities.Category;
 import daw2a.kataapicervezas.service.CategoryService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -36,8 +37,9 @@ public class CategoryController {
         }
     }
     @PostMapping
-    public String agregarCategoria(@ResponseBody @Valid Category category) {
-        Category nuevaCategory = categoryService.agregarCategoria(category)
+    public String agregarCategoria(@RequestBody @Valid Category category) {
+        Category nuevaCategory = categoryService.agregarCategoria(category);
+        return ResponseEntity<Category>
     }
     @DeleteMapping
     public String borrarCategoria() {
