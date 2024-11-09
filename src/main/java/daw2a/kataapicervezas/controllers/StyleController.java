@@ -25,7 +25,7 @@ public class StyleController {
         return ResponseEntity.ok(styles);
     }
 
-    @GetMapping
+    @GetMapping("/{id}")
     public ResponseEntity<Style> obtenerStyle(@PathVariable Long id) {
         try {
             Style style = styleService.obtenerStyle(id)
