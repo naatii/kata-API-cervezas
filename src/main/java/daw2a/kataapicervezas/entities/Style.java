@@ -17,7 +17,7 @@ public class Style {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(name = "cat_id", nullable = false)
     private int categoryId;

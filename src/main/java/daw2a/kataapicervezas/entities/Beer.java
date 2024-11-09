@@ -17,7 +17,7 @@ public class Beer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(name = "brewery_id", nullable = false)
     private int breweryId;
