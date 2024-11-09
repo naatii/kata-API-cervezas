@@ -27,10 +27,10 @@ public class BeerController {
         return ResponseEntity.ok(beers);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Beer> obtenerCerveza(Long id){
+    public ResponseEntity<Beer> obtenerCerveza(@PathVariable Long id){
         try {
             Beer beer = beerService.obtenerCerveza(id)
-                    .orElseThrow(()-> new NoSuchElementException("Categoria no encontrada con id " + id));
+                    .orElseThrow(()-> new NoSuchElementException("Cerveza no encontrada con id " + id));
             return ResponseEntity.ok(beer);
         } catch (NoSuchElementException ex){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -42,7 +42,7 @@ public class BeerController {
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevaBeer);
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<Beer> borrarCerveza(Long id) {
+    public ResponseEntity<Beer> borrarCerveza(@PathVariable Long id) {
         try {
             beerService.borrarCerveza(id);
             return ResponseEntity.noContent().build();
