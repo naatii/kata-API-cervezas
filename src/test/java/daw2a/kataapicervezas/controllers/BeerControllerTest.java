@@ -1,20 +1,20 @@
 package daw2a.kataapicervezas.controllers;
 
 import daw2a.kataapicervezas.entities.Beer;
-import daw2a.kataapicervezas.repositories.BeerRepository;
 import daw2a.kataapicervezas.service.BeerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -30,9 +30,9 @@ public class BeerControllerTest {
     private Beer beer;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         MockitoAnnotations.openMocks(this);
-        Beer beer = new Beer(
+        beer = new Beer(
                 1L,                     // id (Long)
                 1,                      // breweryId (int)
                 "Cerveza Aleatoria",    // name (String)
@@ -48,6 +48,7 @@ public class BeerControllerTest {
                 LocalDateTime.now()     // lastMod (LocalDateTime) - última modificación
         );
     }
+
     @Test
     void listarBeer() {
         // Arrange
@@ -57,8 +58,53 @@ public class BeerControllerTest {
         ResponseEntity<List<Beer>> response = beerController.listarCervezas();
 
         // Assert
-        assertEquals(1, response.getBody().size());
+        assertEquals(1, Objects.requireNonNull(response.getBody()).size());
         assertEquals(beer, response.getBody().get(0));
         verify(beerService, times(1)).listarCervezas();
+    }
+
+    @Test
+    void obtenerBeer() {
+        when(beerService.obtenerCerveza(1L)).thenReturn(Optional.of(beer));
+
+        ResponseEntity<Beer> response = beerController.obtenerCerveza(1L);
+
+        assertEquals(ResponseEntity.ok(beer), response);
+        assertEquals(beer, response.getBody());
+        verify(beerService, times(1)).obtenerCerveza(1L);
+    }
+
+    @Test
+    void borrarBeer() {
+        doNothing().when(beerService).borrarCerveza(1L);
+
+        ResponseEntity<?> response = beerController.borrarCerveza(1L);
+
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+        verify(beerService, times(1)).borrarCerveza(1L);
+    }
+
+
+    @Test
+    void actualizarBeer() {
+        when(beerService.actualizarCervaza(1L, beer)).thenReturn(beer);
+
+        ResponseEntity<Beer> response = beerController.actualizarCerveza(1L, beer);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(beer, response.getBody());
+
+        verify(beerService, times(1)).actualizarCervaza(1L, beer);
+    }
+
+    @Test
+    void agregarBeer() {
+        when(beerService.agregarCerveza(beer)).thenReturn(beer);
+
+        ResponseEntity<Beer> response = beerController.agregarCerveza(beer);
+
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(beer, response.getBody());
+        verify(beerService, times(1)).agregarCerveza(beer);
     }
 }
